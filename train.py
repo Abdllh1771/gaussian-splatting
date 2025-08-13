@@ -12,7 +12,7 @@
 import os
 import torch
 from random import randint
-from utils.loss_utils import l1_loss, ssim
+from utils.loss_utils import l1_loss, ssim, focal_frequency_loss
 from gaussian_renderer import render, network_gui
 import sys
 from scene import Scene, GaussianModel
@@ -124,6 +124,10 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
             ssim_value = ssim(image, gt_image)
 
         loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * (1.0 - ssim_value)
+
+        if opt.lambda_fft > 0.0:
+            Lfft = focal_frequency_loss(image.unsqueeze(0), gt_image.unsqueeze(0))
+            loss += opt.lambda_fft * Lfft
 
         # Depth regularization
         Ll1depth_pure = 0.0
