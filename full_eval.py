@@ -101,8 +101,8 @@ if not args.skip_rendering:
         common_args += " --train_test_exp "
 
     for scene, source in zip(all_scenes, all_sources):
-        os.system("python render.py --iteration 7000 -s " + source + " -m " + args.output_path + "/" + scene + common_args)
-        os.system("python render.py --iteration 30000 -s " + source + " -m " + args.output_path + "/" + scene + common_args)
+        os.system("python view.py --iteration 7000 -s " + source + " -m " + args.output_path + "/" + scene + common_args)
+        os.system("python view.py --iteration 30000 -s " + source + " -m " + args.output_path + "/" + scene + common_args)
 
 if not args.skip_metrics:
     scenes_string = ""

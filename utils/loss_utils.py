@@ -89,3 +89,11 @@ def _ssim(img1, img2, window, window_size, channel, size_average=True):
 def fast_ssim(img1, img2):
     ssim_map = FusedSSIMMap.apply(C1, C2, img1, img2)
     return ssim_map.mean()
+
+
+def focal_frequency_loss(pred, target, alpha: float = 1.0, eps: float = 1e-8):
+    pred_fft = torch.fft.fft2(pred, norm='ortho')
+    target_fft = torch.fft.fft2(target, norm='ortho')
+    diff = pred_fft - target_fft
+    weight = diff.abs().pow(alpha)
+    return (weight * diff.abs()).mean()
