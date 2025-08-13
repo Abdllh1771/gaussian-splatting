@@ -215,18 +215,18 @@ The MipNeRF360 scenes are hosted by the paper authors [here](https://jonbarron.i
 By default, the trained models use all available images in the dataset. To train them while withholding a test set for evaluation, use the ```--eval``` flag. This way, you can render training/test sets and produce error metrics as follows:
 ```shell
 python train.py -s <path to COLMAP or NeRF Synthetic dataset> --eval # Train with train/test split
-python render.py -m <path to trained model> # Generate renderings
+python view.py -m <path to trained model> # Generate renderings
 python metrics.py -m <path to trained model> # Compute error metrics on renderings
 ```
 
-If you want to evaluate our [pre-trained models](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/pretrained/models.zip), you will have to download the corresponding source data sets and indicate their location to ```render.py``` with an additional ```--source_path/-s``` flag. Note: The pre-trained models were created with the release codebase. This code base has been cleaned up and includes bugfixes, hence the metrics you get from evaluating them will differ from those in the paper.
+If you want to evaluate our [pre-trained models](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/pretrained/models.zip), you will have to download the corresponding source data sets and indicate their location to ```view.py``` with an additional ```--source_path/-s``` flag. Note: The pre-trained models were created with the release codebase. This code base has been cleaned up and includes bugfixes, hence the metrics you get from evaluating them will differ from those in the paper.
 ```shell
-python render.py -m <path to pre-trained model> -s <path to COLMAP dataset>
+python view.py -m <path to pre-trained model> -s <path to COLMAP dataset>
 python metrics.py -m <path to pre-trained model>
 ```
 
 <details>
-<summary><span style="font-weight: bold;">Command Line Arguments for render.py</span></summary>
+<summary><span style="font-weight: bold;">Command Line Arguments for view.py</span></summary>
 
   #### --model_path / -m 
   Path to the trained model directory you want to create renderings for.
@@ -551,7 +551,7 @@ Add the following parameters to enable it:
 Again, other excellent papers have used similar ideas e.g. [NeRF-W](https://nerf-w.github.io/), [URF](https://urban-radiance-fields.github.io/).
 
 ### Anti-aliasing
-We added the EWA Filter from [Mip Splatting](https://niujinshuchong.github.io/mip-splatting/) in our codebase to remove aliasing. It is disabled by default but you can enable it by adding `--antialiasing` when training on a scene using `train.py` or rendering using `render.py`. Antialiasing can be toggled in the SIBR viewer, it is disabled by default but you should enable it when viewing a scene trained using `--antialiasing`.
+We added the EWA Filter from [Mip Splatting](https://niujinshuchong.github.io/mip-splatting/) in our codebase to remove aliasing. It is disabled by default but you can enable it by adding `--antialiasing` when training on a scene using `train.py` or rendering using `view.py`. Antialiasing can be toggled in the SIBR viewer, it is disabled by default but you should enable it when viewing a scene trained using `--antialiasing`.
 ![aa](/assets/aa_onoff.gif)
 *this scene was trained using `--antialiasing`*.
 
